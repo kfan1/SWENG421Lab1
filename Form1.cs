@@ -2,16 +2,26 @@ using System.Diagnostics;
 
 namespace Lab1
 {
+    /**
+     * Form1 class handles the main functionality of the drawing application.
+     * It allows users to select shapes (line, rectangle, ellipse) and colors (RGB)
+     * to draw on a panel using mouse events.
+     */
     public partial class Form1 : Form
     {
+        // Current color, shape, and mouse locations, dX/dY for mouse down coordinates, cX/cY for mouse current coordinates
         int redValue, greenValue, blueValue;
         Shape shape = Shape.Line;
         int dX, dY, cX, cY;
-        Bitmap? bg, fg;
-        Graphics? bgg, fgg;
+
+        // Bitmaps and Graphics for double buffered background and foreground drawing
+        Bitmap bg, fg;
+        Graphics bgg, fgg;
+
+        // Mouse down state
         bool down = false;
 
-
+        // Enum for shape types
         public enum Shape
         {
             Line,
@@ -24,6 +34,7 @@ namespace Lab1
             InitializeComponent();
         }
 
+        // Event handlers for button clicks to select shapes
         private void button1_Click(object sender, EventArgs e)
         {
             this.shape = Shape.Line;
@@ -39,6 +50,7 @@ namespace Lab1
             this.shape = Shape.Ellipse;
         }
 
+        // Event handlers for trackbar value changes to set RGB color values
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             this.redValue = trackBar1.Value;
@@ -54,6 +66,8 @@ namespace Lab1
             this.blueValue = trackBar3.Value;
         }
 
+        // Mouse event handlers for drawing on the panel
+        // panel1_MouseDown sets the initial mouse down position and initializes bitmaps if necessary
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             this.down = true;
@@ -69,6 +83,7 @@ namespace Lab1
             }
         }
 
+        // panel1_MouseMove updates the current mouse position and draws the selected shape in the foreground bitmap
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
             if (this.down)
@@ -94,6 +109,7 @@ namespace Lab1
             }
         }
 
+        // panel1_MouseUp finalizes the drawing by copying the foreground to the background bitmap and resetting the mouse down state
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
             this.down = false;
