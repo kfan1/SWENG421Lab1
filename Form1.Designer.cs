@@ -103,7 +103,7 @@
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = SystemColors.ActiveCaption;
+            panel1.BackColor = Color.White;
             panel1.Location = new Point(37, 85);
             panel1.Name = "panel1";
             panel1.Size = new Size(732, 333);

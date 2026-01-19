@@ -3,8 +3,8 @@ using System.Drawing;
 
 public class DrawColoredEllipse : DrawColoredShape
 {
-    public static void draw(Graphics g, Pen p, int dX, int dY, int uX, int uY)
+    public static void draw(Graphics g, Pen p, int dX, int dY, int cX, int cY)
     {
-        g.DrawEllipse(p, Math.Min(dX, uX), Math.Min(dY, uY), Math.Abs(uX - dX), Math.Abs(uY - dY));
+        g.DrawEllipse(p, Math.Min(dX, cX), Math.Min(dY, cY), Math.Abs(cX - dX), Math.Abs(cY - dY));
     }
 }

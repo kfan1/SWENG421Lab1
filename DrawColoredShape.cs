@@ -2,5 +2,5 @@
 
 interface DrawColoredShape
 {
-    abstract static void draw(Graphics g, Pen p, int dX, int dY, int uX, int uY);
+    public abstract static void draw(Graphics g, Pen p, int dX, int dY, int cX, int cY);
 }

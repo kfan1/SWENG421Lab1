@@ -6,7 +6,10 @@ namespace Lab1
     {
         int redValue, greenValue, blueValue;
         string shape = "line";
-        int mouseDownX, mouseDownY, mouseUpX, mouseUpY;
+        int dX, dY, cX, cY;
+        Bitmap bg, fg;
+        Graphics bgg, fgg;
+        bool down = false;
 
         public Form1()
         {
@@ -45,33 +48,50 @@ namespace Lab1
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            this.mouseDownX = e.X;
-            this.mouseDownY = e.Y;
+            this.down = true;
+            this.dX = e.X;
+            this.dY = e.Y;
+            if(this.bg == null)
+            {
+                this.bg = new Bitmap(panel1.Width, panel1.Height);
+                this.fg = new Bitmap(panel1.Width, panel1.Height);
+                this.bgg = Graphics.FromImage(this.bg);
+                this.bgg.FillRectangle(Brushes.White, 0, 0, panel1.Width, panel1.Height);
+                this.fgg = Graphics.FromImage(this.fg);
+            }
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
-
+            if (this.down)
+            {
+                this.cX = e.X;
+                this.cY = e.Y;
+                this.fgg.DrawImage(this.bg, 0, 0);
+                Pen pen = new Pen(Color.FromArgb(this.redValue, this.greenValue, this.blueValue), 2);
+                if (this.shape == "line")
+                {
+                    DrawColoredLine.draw(this.fgg, pen, this.dX, this.dY, this.cX, this.cY);
+                }
+                else if (this.shape == "rectangle")
+                {
+                    DrawColoredRectangle.draw(this.fgg, pen, this.dX, this.dY, this.cX, this.cY);
+                }
+                else if (this.shape == "ellipse")
+                {
+                    DrawColoredEllipse.draw(this.fgg, pen, this.dX, this.dY, this.cX, this.cY);
+                }
+                Graphics g = panel1.CreateGraphics();
+                g.DrawImage(this.fg, 0, 0);
+            }
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
-            this.mouseUpX = e.X;
-            this.mouseUpY = e.Y;
+            this.down = false;
+            this.bgg.DrawImage(this.fg, 0, 0);
             Graphics g = panel1.CreateGraphics();
-            Pen pen = new Pen(Color.FromArgb(redValue, greenValue, blueValue), 2);
-            if (shape == "line")
-            {
-                DrawColoredLine.draw(g, pen, mouseDownX, mouseDownY, mouseUpX, mouseUpY);
-            }
-            else if (shape == "rectangle")
-            {
-                DrawColoredRectangle.draw(g, pen, mouseDownX, mouseDownY, mouseUpX, mouseUpY);
-            }
-            else if (shape == "ellipse")
-            {
-               DrawColoredEllipse.draw(g, pen, mouseDownX, mouseDownY, mouseUpX, mouseUpY);
-            }
+            g.DrawImage(this.bg, 0, 0);
         }
     }
 }
