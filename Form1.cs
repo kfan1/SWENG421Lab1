@@ -5,11 +5,19 @@ namespace Lab1
     public partial class Form1 : Form
     {
         int redValue, greenValue, blueValue;
-        string shape = "line";
+        Shape shape = Shape.Line;
         int dX, dY, cX, cY;
-        Bitmap bg, fg;
-        Graphics bgg, fgg;
+        Bitmap? bg, fg;
+        Graphics? bgg, fgg;
         bool down = false;
+
+
+        public enum Shape
+        {
+            Line,
+            Rectangle,
+            Ellipse
+        }
 
         public Form1()
         {
@@ -18,17 +26,17 @@ namespace Lab1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.shape = "line";
+            this.shape = Shape.Line;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.shape = "rectangle";
+            this.shape = Shape.Rectangle;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.shape = "ellipse";
+            this.shape = Shape.Ellipse;
         }
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
@@ -69,17 +77,17 @@ namespace Lab1
                 this.cY = e.Y;
                 this.fgg.DrawImage(this.bg, 0, 0);
                 Pen pen = new Pen(Color.FromArgb(this.redValue, this.greenValue, this.blueValue), 2);
-                if (this.shape == "line")
+                switch(this.shape)
                 {
-                    DrawColoredLine.draw(this.fgg, pen, this.dX, this.dY, this.cX, this.cY);
-                }
-                else if (this.shape == "rectangle")
-                {
-                    DrawColoredRectangle.draw(this.fgg, pen, this.dX, this.dY, this.cX, this.cY);
-                }
-                else if (this.shape == "ellipse")
-                {
-                    DrawColoredEllipse.draw(this.fgg, pen, this.dX, this.dY, this.cX, this.cY);
+                    case Shape.Line:
+                        DrawColoredLine.draw(this.fgg, pen, this.dX, this.dY, this.cX, this.cY);
+                        break;
+                    case Shape.Rectangle:
+                        DrawColoredRectangle.draw(this.fgg, pen, this.dX, this.dY, this.cX, this.cY);
+                        break;
+                    case Shape.Ellipse:
+                        DrawColoredEllipse.draw(this.fgg, pen, this.dX, this.dY, this.cX, this.cY);
+                        break;
                 }
                 Graphics g = panel1.CreateGraphics();
                 g.DrawImage(this.fg, 0, 0);
